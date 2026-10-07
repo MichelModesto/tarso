@@ -19,7 +19,14 @@ const shirts = [
   [18, "Analog Paper Cut", "18-analog-paper-cut.jpg"],
   [19, "Tattoo Flash Fortune", "19-tattoo-flash-fortune.jpg"],
   [20, "Memphis 90s", "20-memphis-90s.jpg"],
-].map(([id, name, image]) => ({ id, name, image: `/images/${image}` }));
+].map(([id, name, image]) => ({ id, name, image: `images/${image}` }));
+
+// ponytail: GitHub Pages não tem API — voto fica só no navegador. Placar real exige Cloudflare Pages + D1 (ver README).
+const STATIC_MODE = location.hostname.endsWith("github.io");
+
+function savedLocalVote() {
+  try { return Number(localStorage.getItem("myVote")) || null; } catch { return null; }
+}
 
 const state = {
   results: new Map(shirts.map(({ id }) => [id, 0])),
@@ -112,6 +119,7 @@ async function fetchJson(url, options) {
 }
 
 async function refreshResults() {
+  if (STATIC_MODE) return { results: [], totalVotes: state.totalVotes };
   const data = await fetchJson("/api/results");
   state.results = new Map(data.results.map(({ optionId, votes }) => [optionId, votes]));
   state.totalVotes = data.totalVotes;
@@ -120,6 +128,14 @@ async function refreshResults() {
 }
 
 async function loadInitialState() {
+  if (STATIC_MODE) {
+    state.myVote = savedLocalVote();
+    if (state.myVote) {
+      state.results.set(state.myVote, 1);
+      state.totalVotes = 1;
+    }
+    return render();
+  }
   try {
     const [results, status] = await Promise.all([
       fetchJson("/api/results"),
@@ -167,6 +183,14 @@ async function submitVote(optionId) {
   renderGallery();
 
   try {
+    if (STATIC_MODE) {
+      try { localStorage.setItem("myVote", String(optionId)); } catch {}
+      state.myVote = optionId;
+      state.results.set(optionId, 1);
+      state.totalVotes = 1;
+      showToast("Voto anotado neste aparelho. Obrigado!");
+      return;
+    }
     await fetchJson("/api/vote", {
       method: "POST",
       headers: { "content-type": "application/json" },

@@ -9,9 +9,9 @@ const publicRoot = resolve(projectRoot, "public");
 
 test("the voting page references existing local assets", async () => {
   const html = await readFile(resolve(publicRoot, "index.html"), "utf8");
-  const assets = [...html.matchAll(/(?:src|href)="(\/[^"#?]+)"/g)].map((match) => match[1]);
+  const assets = [...html.matchAll(/(?:src|href)="([^"#?:]+)"/g)].map((match) => match[1]);
   assert.ok(assets.length >= 3);
-  await Promise.all(assets.map((asset) => access(resolve(publicRoot, asset.slice(1)))));
+  await Promise.all(assets.map((asset) => access(resolve(publicRoot, asset))));
 });
 
 test("all twenty optimized shirt images exist", async () => {
