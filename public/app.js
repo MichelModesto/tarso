@@ -236,7 +236,7 @@ function registerWebMcpTools() {
   context.registerTool({
     name: "get_shirt_vote_results",
     title: "Consultar votação das camisas",
-    description: "Retorna o placar atual das 20 camisas do Na Bala F.C.",
+    description: "Retorna o placar atual das 20 camisas do Sem Nome F.C.",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
     annotations: { readOnlyHint: true, untrustedContentHint: false },
     execute: refreshResults,
