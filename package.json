@@ -1,0 +1,17 @@
+{
+  "name": "camisas-na-bala",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preview": "node scripts/preview-server.mjs",
+    "dev": "wrangler pages dev public --d1 DB=camisas-na-bala-votes --binding IP_HASH_SALT=dev-only-change-me",
+    "deploy": "wrangler pages deploy public --project-name camisas-na-bala",
+    "db:migrate:local": "wrangler d1 migrations apply camisas-na-bala-votes --local",
+    "db:migrate:remote": "wrangler d1 migrations apply camisas-na-bala-votes --remote",
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.45.0"
+  }
+}

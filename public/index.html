@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#11110f" />
+    <meta name="description" content="Vote no próximo manto do Na Bala F.C. Uma escolha por conexão." />
+    <title>Escolha o próximo manto | Na Bala F.C.</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Na Bala F.C. — início">
+        <span class="brand-mark" aria-hidden="true">NB</span>
+        <span>NA BALA <b>F.C.</b></span>
+      </a>
+      <a class="ranking-link" href="#ranking">Ver ranking</a>
+    </header>
+
+    <main id="top">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow"><span></span> VOTAÇÃO OFICIAL</div>
+        <h1 id="page-title">Qual será o<br /><em>próximo manto?</em></h1>
+        <p>Compare as 20 propostas e escolha uma. Cada conexão pode registrar somente um voto.</p>
+        <div class="intro-meta" aria-live="polite">
+          <div><strong id="total-votes">—</strong><span>votos registrados</span></div>
+          <div><strong>20</strong><span>mantos na disputa</span></div>
+          <div class="vote-status" id="vote-status"><strong>1×</strong><span>voto por IP</span></div>
+        </div>
+      </section>
+
+      <section class="vote-layout" aria-label="Camisas em votação">
+        <div class="gallery" id="shirt-grid" aria-live="polite"></div>
+
+        <aside class="ranking" id="ranking" aria-labelledby="ranking-title">
+          <div class="ranking-heading">
+            <p>PLACAR AO VIVO</p>
+            <h2 id="ranking-title">Mais votadas</h2>
+          </div>
+          <ol id="ranking-list" class="ranking-list"></ol>
+          <p class="privacy-note">Seu endereço IP não é guardado. Salvamos apenas uma assinatura criptográfica para impedir votos repetidos.</p>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      <span>NA BALA F.C.</span>
+      <span>ESCOLHA DO MANTO · 2026</span>
+    </footer>
+
+    <dialog id="vote-dialog" class="vote-dialog">
+      <form method="dialog">
+        <button class="dialog-close" value="cancel" aria-label="Fechar">×</button>
+        <p class="dialog-kicker">CONFIRMAR ESCOLHA</p>
+        <h2 id="confirm-title">Votar nesta camisa?</h2>
+        <p>Depois de confirmar, não será possível trocar o voto nesta conexão.</p>
+        <div class="dialog-actions">
+          <button class="button button-secondary" value="cancel">Voltar</button>
+          <button class="button button-primary" id="confirm-vote" value="default">Confirmar voto</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="image-dialog" class="image-dialog">
+      <button class="dialog-close" id="close-image" aria-label="Fechar imagem">×</button>
+      <img id="large-image" alt="" />
+      <p id="large-caption"></p>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
